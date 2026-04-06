@@ -11,126 +11,226 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --green-1: #1f7a3d;
+      --green-2: #2f9e44;
+      --green-3: #eaf7ee;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --white: #ffffff;
+      --shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background: #f4f8f3;
-      color: #1f2937;
+      background:
+        radial-gradient(circle at top right, rgba(47,158,68,0.10), transparent 20%),
+        linear-gradient(180deg, #f6fbf7 0%, #eef7f0 100%);
+      color: var(--text);
       padding: 20px;
     }
 
     .container {
-      max-width: 1100px;
-      margin: auto;
+      max-width: 1180px;
+      margin: 0 auto;
     }
 
     .hero {
-      background: linear-gradient(135deg, #2e7d32, #43a047);
+      background: linear-gradient(135deg, var(--green-1), var(--green-2));
       color: white;
-      padding: 24px;
-      border-radius: 16px;
-      margin-bottom: 20px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+      border-radius: 24px;
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
     }
 
     .hero h1 {
-      font-size: 30px;
+      font-size: 32px;
       margin-bottom: 6px;
+      letter-spacing: 0.5px;
     }
 
     .hero p {
       font-size: 14px;
-      opacity: 0.95;
+      opacity: 0.92;
     }
 
-    .dashboard {
+    .summary-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    .card,
-    .section {
-      background: white;
-      border-radius: 14px;
+    .summary-card {
+      background: var(--white);
+      border: 1px solid #edf2ee;
+      border-radius: var(--radius);
       padding: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      margin-bottom: 16px;
+      box-shadow: var(--shadow);
     }
 
-    .card h3,
-    .section h2 {
-      color: #2e7d32;
+    .summary-card .label {
+      font-size: 12px;
+      color: var(--muted);
       margin-bottom: 8px;
+      line-height: 1.4;
     }
 
-    .value {
+    .summary-card .value {
       font-size: 22px;
-      font-weight: bold;
+      font-weight: 700;
+      color: #14361f;
     }
 
-    .muted {
-      color: #666;
+    .section {
+      background: rgba(255,255,255,0.96);
+      border: 1px solid #edf2ee;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section h2 {
+      font-size: 18px;
+      color: var(--green-1);
+    }
+
+    .section p {
       font-size: 13px;
+      color: var(--muted);
       line-height: 1.5;
-      margin-top: 6px;
     }
 
     .table-wrap {
       overflow-x: auto;
       margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 850px;
+      min-width: 860px;
     }
 
-    th,
-    td {
-      padding: 10px;
-      border-bottom: 1px solid #e0e0e0;
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #edf1ef;
       text-align: left;
       font-size: 13px;
       vertical-align: top;
     }
 
     th {
-      background: #e8f5e9;
-      color: #1b5e20;
+      background: #f3fbf5;
+      color: #19552d;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .positive {
-      color: #2e7d32;
-      font-weight: bold;
+      color: #1f7a3d;
+      font-weight: 700;
     }
 
     .negative {
       color: #c62828;
-      font-weight: bold;
+      font-weight: 700;
     }
 
-    @media (max-width: 768px) {
+    .pill {
+      display: inline-block;
+      padding: 5px 10px;
+      background: var(--green-3);
+      color: #1f7a3d;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .mini-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    .mini-stat:last-child {
+      border-bottom: none;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .summary-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
       body {
         padding: 12px;
       }
 
       .hero {
-        padding: 18px;
+        padding: 22px 18px;
+        border-radius: 20px;
       }
 
       .hero h1 {
-        font-size: 24px;
+        font-size: 26px;
       }
 
-      .value {
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .summary-card .value {
         font-size: 18px;
       }
 
-      .card,
       .section {
         padding: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .summary-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -143,57 +243,70 @@
       <p>Financial Report Dashboard</p>
     </div>
 
-    <div class="dashboard">
-      <div class="card">
-        <h3>Total Savings</h3>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="label">Total Savings</div>
         <div class="value" id="reportSavings">₱0.00</div>
       </div>
-
-      <div class="card">
-        <h3>Total Interest</h3>
+      <div class="summary-card">
+        <div class="label">Total Interest</div>
         <div class="value" id="reportInterest">₱0.00</div>
       </div>
-
-      <div class="card">
-        <h3>MP2 + Coop Value</h3>
+      <div class="summary-card">
+        <div class="label">MP2 + Coop Value</div>
         <div class="value" id="reportDividends">₱0.00</div>
       </div>
-
-      <div class="card">
-        <h3>Other Investments</h3>
+      <div class="summary-card">
+        <div class="label">Other Investments</div>
         <div class="value" id="reportInvestments">₱0.00</div>
       </div>
-
-      <div class="card">
-        <h3>Total Net Worth</h3>
+      <div class="summary-card">
+        <div class="label">Total Net Worth</div>
         <div class="value" id="reportNetWorth">₱0.00</div>
       </div>
     </div>
 
-    <div class="section">
-      <h2>Savings Accounts Report</h2>
-      <p class="muted">Summary of current balances and estimated interest by account.</p>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Account</th>
-              <th>Type</th>
-              <th>Mode</th>
-              <th>Beginning Balance</th>
-              <th>Current Balance</th>
-              <th>Rate</th>
-              <th>Estimated Net Interest</th>
-            </tr>
-          </thead>
-          <tbody id="reportAccountsBody"></tbody>
-        </table>
+    <div class="two-col">
+      <div class="section">
+        <div class="section-head">
+          <h2>Savings Accounts Report</h2>
+          <span class="pill">Summary</span>
+        </div>
+        <p>Current balances and estimated net interest by account.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Account</th>
+                <th>Type</th>
+                <th>Mode</th>
+                <th>Beginning Balance</th>
+                <th>Current Balance</th>
+                <th>Rate</th>
+                <th>Estimated Net Interest</th>
+              </tr>
+            </thead>
+            <tbody id="reportAccountsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>Quick Totals</h2>
+          <span class="pill">Overview</span>
+        </div>
+        <p>High-level financial snapshot based on your saved records.</p>
+        <div id="quickStats"></div>
       </div>
     </div>
 
     <div class="section">
-      <h2>MP2 / Cooperative Report</h2>
-      <p class="muted">Tax-free holdings and computed current values.</p>
+      <div class="section-head">
+        <h2>MP2 / Cooperative Report</h2>
+        <span class="pill">Tax-Free</span>
+      </div>
+      <p>Tax-free holdings and computed current values.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -214,8 +327,11 @@
     </div>
 
     <div class="section">
-      <h2>Other Investments Report</h2>
-      <p class="muted">Current value, gain/loss, and growth by investment.</p>
+      <div class="section-head">
+        <h2>Other Investments Report</h2>
+        <span class="pill">Market Value</span>
+      </div>
+      <p>Current value, gain/loss, and growth by investment.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -235,8 +351,11 @@
     </div>
 
     <div class="section">
-      <h2>Yearly Summary</h2>
-      <p class="muted">Annual deposits, withdrawals, estimated interest, and ending balances.</p>
+      <div class="section-head">
+        <h2>Yearly Summary</h2>
+        <span class="pill">Annual</span>
+      </div>
+      <p>Annual deposits, withdrawals, estimated interest, and ending balances.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -358,6 +477,10 @@
       let totalSavings = 0;
       let totalInterest = 0;
 
+      if (!accounts.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty">No savings accounts yet.</td></tr>';
+      }
+
       accounts.forEach(account => {
         const m = computeSavingsMetrics(account);
         totalSavings += m.currentBalance;
@@ -392,6 +515,10 @@
 
       let totalValue = 0;
 
+      if (!dividendItems.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty">No MP2 / cooperative records yet.</td></tr>';
+      }
+
       dividendItems.forEach(item => {
         const earned = item.divEarned == null
           ? (item.divCapital * (item.divRate / 100))
@@ -425,6 +552,10 @@
       tbody.innerHTML = '';
 
       let totalValue = 0;
+
+      if (!investments.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty">No investment records yet.</td></tr>';
+      }
 
       investments.forEach(item => {
         const gain = item.invValue - item.invCapital;
@@ -469,14 +600,8 @@
             };
           }
 
-          if (row.transactionType === 'Deposit') {
-            yearlyMap[year].deposits += row.transactionAmount;
-          }
-
-          if (row.transactionType === 'Withdrawal') {
-            yearlyMap[year].withdrawals += row.transactionAmount;
-          }
-
+          if (row.transactionType === 'Deposit') yearlyMap[year].deposits += row.transactionAmount;
+          if (row.transactionType === 'Withdrawal') yearlyMap[year].withdrawals += row.transactionAmount;
           yearlyMap[year].endingBalance = row.runningBalance;
         });
 
@@ -496,6 +621,10 @@
 
       const years = Object.keys(yearlyMap).sort();
 
+      if (!years.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty">No yearly data yet.</td></tr>';
+      }
+
       years.forEach(year => {
         tbody.innerHTML += `
           <tr>
@@ -507,10 +636,6 @@
           </tr>
         `;
       });
-
-      if (!years.length) {
-        tbody.innerHTML = `<tr><td colspan="5">No yearly data yet.</td></tr>`;
-      }
     }
 
     function renderNetWorth() {
@@ -531,6 +656,16 @@
       const totalInvestments = investments.reduce((sum, i) => sum + i.invValue, 0);
 
       document.getElementById('reportNetWorth').textContent = peso(totalSavings + totalDividends + totalInvestments);
+
+      const quickStats = document.getElementById('quickStats');
+      quickStats.innerHTML = `
+        <div class="mini-stat"><span>Savings Accounts</span><strong>${accounts.length}</strong></div>
+        <div class="mini-stat"><span>MP2 / Coop Records</span><strong>${dividendItems.length}</strong></div>
+        <div class="mini-stat"><span>Other Investments</span><strong>${investments.length}</strong></div>
+        <div class="mini-stat"><span>Total Savings Value</span><strong>${peso(totalSavings)}</strong></div>
+        <div class="mini-stat"><span>Total Investment Value</span><strong>${peso(totalInvestments)}</strong></div>
+        <div class="mini-stat"><span>Total MP2 / Coop Value</span><strong>${peso(totalDividends)}</strong></div>
+      `;
     }
 
     function renderAllReports() {
