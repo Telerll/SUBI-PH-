@@ -1,75 +1,547 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUBI-PH Report</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SUBI-PH Report</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f8f3;
-  padding: 20px;
-  color: #1f2937;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8f3;
+      color: #1f2937;
+      padding: 20px;
+    }
 
-.container {
-  max-width: 1000px;
-  margin: auto;
-}
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
 
-.hero {
-  background: linear-gradient(135deg, #2e7d32, #43a047);
-  color: white;
-  padding: 25px;
-  border-radius: 14px;
-  margin-bottom: 20px;
-}
+    .hero {
+      background: linear-gradient(135deg, #2e7d32, #43a047);
+      color: white;
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    }
 
-.hero h1 {
-  margin: 0;
-}
+    .hero h1 {
+      font-size: 30px;
+      margin-bottom: 6px;
+    }
 
-.card {
-  background: white;
-  padding: 18px;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
+    .hero p {
+      font-size: 14px;
+      opacity: 0.95;
+    }
 
-h2 {
-  margin-bottom: 10px;
-  color: #2e7d32;
-}
-</style>
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .card,
+    .section {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin-bottom: 16px;
+    }
+
+    .card h3,
+    .section h2 {
+      color: #2e7d32;
+      margin-bottom: 8px;
+    }
+
+    .value {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .muted {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 6px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 850px;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #e0e0e0;
+      text-align: left;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #e8f5e9;
+      color: #1b5e20;
+    }
+
+    .positive {
+      color: #2e7d32;
+      font-weight: bold;
+    }
+
+    .negative {
+      color: #c62828;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+
+      .hero {
+        padding: 18px;
+      }
+
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      .value {
+        font-size: 18px;
+      }
+
+      .card,
+      .section {
+        padding: 14px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
 
-<div class="container">
+    <div class="hero">
+      <h1>SUBI-PH</h1>
+      <p>Financial Report Dashboard</p>
+    </div>
 
-  <div class="hero">
-    <h1>SUBI-PH</h1>
-    <p>Financial Report</p>
+    <div class="dashboard">
+      <div class="card">
+        <h3>Total Savings</h3>
+        <div class="value" id="reportSavings">₱0.00</div>
+      </div>
+
+      <div class="card">
+        <h3>Total Interest</h3>
+        <div class="value" id="reportInterest">₱0.00</div>
+      </div>
+
+      <div class="card">
+        <h3>MP2 + Coop Value</h3>
+        <div class="value" id="reportDividends">₱0.00</div>
+      </div>
+
+      <div class="card">
+        <h3>Other Investments</h3>
+        <div class="value" id="reportInvestments">₱0.00</div>
+      </div>
+
+      <div class="card">
+        <h3>Total Net Worth</h3>
+        <div class="value" id="reportNetWorth">₱0.00</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Savings Accounts Report</h2>
+      <p class="muted">Summary of current balances and estimated interest by account.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Account</th>
+              <th>Type</th>
+              <th>Mode</th>
+              <th>Beginning Balance</th>
+              <th>Current Balance</th>
+              <th>Rate</th>
+              <th>Estimated Net Interest</th>
+            </tr>
+          </thead>
+          <tbody id="reportAccountsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>MP2 / Cooperative Report</h2>
+      <p class="muted">Tax-free holdings and computed current values.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Capital</th>
+              <th>Rate</th>
+              <th>Earned</th>
+              <th>Current Value</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody id="reportDividendsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Other Investments Report</h2>
+      <p class="muted">Current value, gain/loss, and growth by investment.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Capital</th>
+              <th>Current Value</th>
+              <th>Gain / Loss</th>
+              <th>% Growth</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody id="reportInvestmentsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Yearly Summary</h2>
+      <p class="muted">Annual deposits, withdrawals, estimated interest, and ending balances.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Total Deposits</th>
+              <th>Total Withdrawals</th>
+              <th>Estimated Net Interest</th>
+              <th>Ending Balance</th>
+            </tr>
+          </thead>
+          <tbody id="reportYearlyBody"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
-  <div class="card">
-    <h2>Total Savings</h2>
-    <p>₱0.00</p>
-  </div>
+  <script>
+    const accounts = JSON.parse(localStorage.getItem('full_ft_accounts')) || [];
+    const transactions = JSON.parse(localStorage.getItem('full_ft_transactions')) || [];
+    const dividendItems = JSON.parse(localStorage.getItem('full_ft_dividends')) || [];
+    const investments = JSON.parse(localStorage.getItem('full_ft_investments')) || [];
 
-  <div class="card">
-    <h2>Total Investments</h2>
-    <p>₱0.00</p>
-  </div>
+    function peso(value) {
+      return '₱' + Number(value || 0).toLocaleString('en-PH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
 
-  <div class="card">
-    <h2>Net Worth</h2>
-    <p>₱0.00</p>
-  </div>
+    function todayString() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
 
-</div>
+    function buildSavingsLedger(account) {
+      const accountTransactions = transactions
+        .filter(t => t.accountId === account.id)
+        .sort((a, b) => new Date(a.transactionDate) - new Date(b.transactionDate) || a.id - b.id);
 
+      const ledger = [{
+        id: `begin-${account.id}`,
+        transactionDate: account.beginningDate,
+        transactionType: 'Beginning Balance',
+        transactionAmount: account.beginningBalance,
+        runningBalance: account.beginningBalance,
+        isSystem: true
+      }];
+
+      let runningBalance = account.beginningBalance;
+
+      accountTransactions.forEach(t => {
+        runningBalance += t.transactionType === 'Deposit' ? t.transactionAmount : -t.transactionAmount;
+        ledger.push({
+          ...t,
+          runningBalance,
+          isSystem: false
+        });
+      });
+
+      return ledger;
+    }
+
+    function computeSavingsMetrics(account) {
+      const ledger = buildSavingsLedger(account);
+      const currentBalance = ledger.length ? ledger[ledger.length - 1].runningBalance : account.beginningBalance;
+
+      const today = new Date(todayString());
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const dailyRate = account.annualRate / 100 / 365;
+
+      const dailyBalancesThisMonth = [];
+      let balance = account.beginningBalance;
+      let txPointer = 0;
+      const filteredLedger = ledger.filter(l => !l.isSystem);
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const thisDate = new Date(year, month, day);
+        const thisDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+        if (new Date(account.beginningDate) > thisDate) {
+          dailyBalancesThisMonth.push(0);
+          continue;
+        }
+
+        while (txPointer < filteredLedger.length && filteredLedger[txPointer].transactionDate <= thisDateStr) {
+          balance += filteredLedger[txPointer].transactionType === 'Deposit'
+            ? filteredLedger[txPointer].transactionAmount
+            : -filteredLedger[txPointer].transactionAmount;
+          txPointer++;
+        }
+
+        dailyBalancesThisMonth.push(balance);
+      }
+
+      const monthlyGross = account.interestMode === 'simple'
+        ? currentBalance * (account.annualRate / 100 / 12)
+        : dailyBalancesThisMonth.reduce((sum, b) => sum + (b * dailyRate), 0);
+
+      const monthlyTax = monthlyGross * 0.20;
+      const monthlyNet = monthlyGross - monthlyTax;
+
+      return {
+        currentBalance,
+        monthlyNet
+      };
+    }
+
+    function renderSavingsReport() {
+      const tbody = document.getElementById('reportAccountsBody');
+      tbody.innerHTML = '';
+
+      let totalSavings = 0;
+      let totalInterest = 0;
+
+      accounts.forEach(account => {
+        const m = computeSavingsMetrics(account);
+        totalSavings += m.currentBalance;
+        totalInterest += m.monthlyNet;
+
+        const modeLabel =
+          account.interestMode === 'traditional' ? 'Traditional' :
+          account.interestMode === 'digital_daily' ? 'Digital Daily Credit' :
+          account.interestMode === 'digital_monthly' ? 'Digital Monthly Credit' :
+          'Simple Monthly';
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${account.accountName}</td>
+            <td>${account.accountType}</td>
+            <td>${modeLabel}</td>
+            <td>${peso(account.beginningBalance)}</td>
+            <td>${peso(m.currentBalance)}</td>
+            <td>${Number(account.annualRate).toFixed(2)}%</td>
+            <td class="positive">${peso(m.monthlyNet)}</td>
+          </tr>
+        `;
+      });
+
+      document.getElementById('reportSavings').textContent = peso(totalSavings);
+      document.getElementById('reportInterest').textContent = peso(totalInterest);
+    }
+
+    function renderDividendsReport() {
+      const tbody = document.getElementById('reportDividendsBody');
+      tbody.innerHTML = '';
+
+      let totalValue = 0;
+
+      dividendItems.forEach(item => {
+        const earned = item.divEarned == null
+          ? (item.divCapital * (item.divRate / 100))
+          : item.divEarned;
+
+        const currentValue = item.divCurrent != null
+          ? item.divCurrent
+          : item.divCapital + earned;
+
+        totalValue += currentValue;
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${item.divName}</td>
+            <td>${item.divType}</td>
+            <td>${item.divStatus || 'waiting'}</td>
+            <td>${peso(item.divCapital)}</td>
+            <td>${Number(item.divRate).toFixed(2)}%</td>
+            <td class="positive">${peso(earned)}</td>
+            <td>${peso(currentValue)}</td>
+            <td>${item.divNote || '-'}</td>
+          </tr>
+        `;
+      });
+
+      document.getElementById('reportDividends').textContent = peso(totalValue);
+    }
+
+    function renderInvestmentsReport() {
+      const tbody = document.getElementById('reportInvestmentsBody');
+      tbody.innerHTML = '';
+
+      let totalValue = 0;
+
+      investments.forEach(item => {
+        const gain = item.invValue - item.invCapital;
+        const growth = item.invCapital > 0 ? (gain / item.invCapital) * 100 : 0;
+        totalValue += item.invValue;
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${item.invName}</td>
+            <td>${item.invType}</td>
+            <td>${peso(item.invCapital)}</td>
+            <td>${peso(item.invValue)}</td>
+            <td class="${gain >= 0 ? 'positive' : 'negative'}">${peso(gain)}</td>
+            <td class="${growth >= 0 ? 'positive' : 'negative'}">${growth.toFixed(2)}%</td>
+            <td>${item.invNote || '-'}</td>
+          </tr>
+        `;
+      });
+
+      document.getElementById('reportInvestments').textContent = peso(totalValue);
+    }
+
+    function renderYearlyReport() {
+      const tbody = document.getElementById('reportYearlyBody');
+      tbody.innerHTML = '';
+
+      const yearlyMap = {};
+
+      accounts.forEach(account => {
+        const metrics = computeSavingsMetrics(account);
+        const ledger = buildSavingsLedger(account);
+
+        ledger.forEach(row => {
+          const year = String(row.transactionDate).slice(0, 4);
+
+          if (!yearlyMap[year]) {
+            yearlyMap[year] = {
+              deposits: 0,
+              withdrawals: 0,
+              endingBalance: 0,
+              interest: 0
+            };
+          }
+
+          if (row.transactionType === 'Deposit') {
+            yearlyMap[year].deposits += row.transactionAmount;
+          }
+
+          if (row.transactionType === 'Withdrawal') {
+            yearlyMap[year].withdrawals += row.transactionAmount;
+          }
+
+          yearlyMap[year].endingBalance = row.runningBalance;
+        });
+
+        const thisYear = String(new Date().getFullYear());
+        if (!yearlyMap[thisYear]) {
+          yearlyMap[thisYear] = {
+            deposits: 0,
+            withdrawals: 0,
+            endingBalance: 0,
+            interest: 0
+          };
+        }
+
+        yearlyMap[thisYear].interest += metrics.monthlyNet * 12;
+        yearlyMap[thisYear].endingBalance = Math.max(yearlyMap[thisYear].endingBalance, metrics.currentBalance);
+      });
+
+      const years = Object.keys(yearlyMap).sort();
+
+      years.forEach(year => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${year}</td>
+            <td>${peso(yearlyMap[year].deposits)}</td>
+            <td>${peso(yearlyMap[year].withdrawals)}</td>
+            <td class="positive">${peso(yearlyMap[year].interest)}</td>
+            <td>${peso(yearlyMap[year].endingBalance)}</td>
+          </tr>
+        `;
+      });
+
+      if (!years.length) {
+        tbody.innerHTML = `<tr><td colspan="5">No yearly data yet.</td></tr>`;
+      }
+    }
+
+    function renderNetWorth() {
+      const totalSavings = accounts.reduce((sum, a) => sum + computeSavingsMetrics(a).currentBalance, 0);
+
+      const totalDividends = dividendItems.reduce((sum, d) => {
+        const earned = d.divCurrent != null && d.divCurrent !== ''
+          ? (Number(d.divCurrent) - d.divCapital)
+          : (d.divEarned == null ? (d.divCapital * (d.divRate / 100)) : d.divEarned);
+
+        const total = d.divCurrent != null && d.divCurrent !== ''
+          ? Number(d.divCurrent)
+          : d.divCapital + earned;
+
+        return sum + total;
+      }, 0);
+
+      const totalInvestments = investments.reduce((sum, i) => sum + i.invValue, 0);
+
+      document.getElementById('reportNetWorth').textContent = peso(totalSavings + totalDividends + totalInvestments);
+    }
+
+    function renderAllReports() {
+      renderSavingsReport();
+      renderDividendsReport();
+      renderInvestmentsReport();
+      renderYearlyReport();
+      renderNetWorth();
+    }
+
+    renderAllReports();
+  </script>
 </body>
 </html>
