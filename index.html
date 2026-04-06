@@ -12,49 +12,48 @@
     }
 
     :root {
-      --green-1: #1f7a3d;
-      --green-2: #2f9e44;
-      --green-3: #eaf7ee;
+      --green-dark: #1f7a3d;
+      --green: #2f9e44;
+      --green-soft: #edf8f0;
+      --bg: #f5faf6;
+      --card: #ffffff;
       --text: #1f2937;
       --muted: #6b7280;
       --line: #e5e7eb;
-      --white: #ffffff;
-      --shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
       --radius: 18px;
     }
 
     body {
       font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(47,158,68,0.10), transparent 20%),
-        linear-gradient(180deg, #f6fbf7 0%, #eef7f0 100%);
+      background: linear-gradient(180deg, #f7fbf8 0%, #eef6f0 100%);
       color: var(--text);
       padding: 20px;
     }
 
     .container {
       max-width: 1180px;
-      margin: 0 auto;
+      margin: auto;
     }
 
     .hero {
-      background: linear-gradient(135deg, var(--green-1), var(--green-2));
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
       color: white;
-      border-radius: 24px;
+      border-radius: 22px;
       padding: 28px 24px;
-      box-shadow: var(--shadow);
       margin-bottom: 18px;
+      box-shadow: var(--shadow);
     }
 
     .hero h1 {
-      font-size: 32px;
+      font-size: 30px;
       margin-bottom: 6px;
       letter-spacing: 0.5px;
     }
 
     .hero p {
       font-size: 14px;
-      opacity: 0.92;
+      opacity: 0.95;
     }
 
     .summary-grid {
@@ -65,57 +64,75 @@
     }
 
     .summary-card {
-      background: var(--white);
-      border: 1px solid #edf2ee;
+      background: var(--card);
       border-radius: var(--radius);
       padding: 16px;
       box-shadow: var(--shadow);
+      border: 1px solid #edf2ee;
     }
 
-    .summary-card .label {
+    .summary-label {
       font-size: 12px;
       color: var(--muted);
       margin-bottom: 8px;
       line-height: 1.4;
     }
 
-    .summary-card .value {
+    .summary-value {
       font-size: 22px;
       font-weight: 700;
-      color: #14361f;
+      color: #163821;
     }
 
     .section {
-      background: rgba(255,255,255,0.96);
-      border: 1px solid #edf2ee;
+      background: var(--card);
       border-radius: 20px;
-      box-shadow: var(--shadow);
       padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid #edf2ee;
       margin-bottom: 18px;
     }
 
-    .section-head {
+    .section-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .section h2 {
+      color: var(--green-dark);
       font-size: 18px;
-      color: var(--green-1);
     }
 
-    .section p {
-      font-size: 13px;
+    .tag {
+      display: inline-block;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .muted {
       color: var(--muted);
+      font-size: 13px;
       line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
     }
 
     .table-wrap {
       overflow-x: auto;
-      margin-top: 10px;
+      margin-top: 8px;
       border: 1px solid var(--line);
       border-radius: 14px;
       background: white;
@@ -127,7 +144,8 @@
       min-width: 860px;
     }
 
-    th, td {
+    th,
+    td {
       padding: 12px 14px;
       border-bottom: 1px solid #edf1ef;
       text-align: left;
@@ -136,8 +154,8 @@
     }
 
     th {
-      background: #f3fbf5;
-      color: #19552d;
+      background: #f1faf3;
+      color: #1c5d31;
       font-weight: 700;
     }
 
@@ -155,24 +173,12 @@
       font-weight: 700;
     }
 
-    .pill {
-      display: inline-block;
-      padding: 5px 10px;
-      background: var(--green-3);
-      color: #1f7a3d;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .two-col {
+    .quick-box {
       display: grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap: 18px;
-      margin-bottom: 18px;
+      gap: 10px;
     }
 
-    .mini-stat {
+    .quick-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -181,14 +187,22 @@
       font-size: 14px;
     }
 
-    .mini-stat:last-child {
+    .quick-item:last-child {
       border-bottom: none;
     }
 
+    .quick-item span {
+      color: var(--muted);
+    }
+
+    .quick-item strong {
+      color: var(--text);
+    }
+
     .empty {
+      padding: 14px;
       color: var(--muted);
       font-size: 13px;
-      padding: 14px;
     }
 
     @media (max-width: 1100px) {
@@ -201,25 +215,24 @@
       }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 768px) {
       body {
         padding: 12px;
       }
 
       .hero {
         padding: 22px 18px;
-        border-radius: 20px;
       }
 
       .hero h1 {
-        font-size: 26px;
+        font-size: 25px;
       }
 
       .summary-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .summary-card .value {
+      .summary-value {
         font-size: 18px;
       }
 
@@ -245,34 +258,39 @@
 
     <div class="summary-grid">
       <div class="summary-card">
-        <div class="label">Total Savings</div>
-        <div class="value" id="reportSavings">₱0.00</div>
+        <div class="summary-label">Total Savings</div>
+        <div class="summary-value" id="reportSavings">₱0.00</div>
       </div>
+
       <div class="summary-card">
-        <div class="label">Total Interest</div>
-        <div class="value" id="reportInterest">₱0.00</div>
+        <div class="summary-label">Total Interest</div>
+        <div class="summary-value" id="reportInterest">₱0.00</div>
       </div>
+
       <div class="summary-card">
-        <div class="label">MP2 + Coop Value</div>
-        <div class="value" id="reportDividends">₱0.00</div>
+        <div class="summary-label">MP2 + Coop Value</div>
+        <div class="summary-value" id="reportDividends">₱0.00</div>
       </div>
+
       <div class="summary-card">
-        <div class="label">Other Investments</div>
-        <div class="value" id="reportInvestments">₱0.00</div>
+        <div class="summary-label">Other Investments</div>
+        <div class="summary-value" id="reportInvestments">₱0.00</div>
       </div>
+
       <div class="summary-card">
-        <div class="label">Total Net Worth</div>
-        <div class="value" id="reportNetWorth">₱0.00</div>
+        <div class="summary-label">Total Net Worth</div>
+        <div class="summary-value" id="reportNetWorth">₱0.00</div>
       </div>
     </div>
 
     <div class="two-col">
       <div class="section">
-        <div class="section-head">
+        <div class="section-header">
           <h2>Savings Accounts Report</h2>
-          <span class="pill">Summary</span>
+          <span class="tag">Summary</span>
         </div>
-        <p>Current balances and estimated net interest by account.</p>
+        <p class="muted">Current balances and estimated net interest by account.</p>
+
         <div class="table-wrap">
           <table>
             <thead>
@@ -292,21 +310,22 @@
       </div>
 
       <div class="section">
-        <div class="section-head">
+        <div class="section-header">
           <h2>Quick Totals</h2>
-          <span class="pill">Overview</span>
+          <span class="tag">Overview</span>
         </div>
-        <p>High-level financial snapshot based on your saved records.</p>
-        <div id="quickStats"></div>
+        <p class="muted">High-level snapshot of your current records.</p>
+        <div class="quick-box" id="quickStats"></div>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-head">
+      <div class="section-header">
         <h2>MP2 / Cooperative Report</h2>
-        <span class="pill">Tax-Free</span>
+        <span class="tag">Tax-Free</span>
       </div>
-      <p>Tax-free holdings and computed current values.</p>
+      <p class="muted">Tax-free holdings and computed current values.</p>
+
       <div class="table-wrap">
         <table>
           <thead>
@@ -327,11 +346,12 @@
     </div>
 
     <div class="section">
-      <div class="section-head">
+      <div class="section-header">
         <h2>Other Investments Report</h2>
-        <span class="pill">Market Value</span>
+        <span class="tag">Market Value</span>
       </div>
-      <p>Current value, gain/loss, and growth by investment.</p>
+      <p class="muted">Current value, gain/loss, and growth by investment.</p>
+
       <div class="table-wrap">
         <table>
           <thead>
@@ -351,11 +371,12 @@
     </div>
 
     <div class="section">
-      <div class="section-head">
+      <div class="section-header">
         <h2>Yearly Summary</h2>
-        <span class="pill">Annual</span>
+        <span class="tag">Annual</span>
       </div>
-      <p>Annual deposits, withdrawals, estimated interest, and ending balances.</p>
+      <p class="muted">Annual deposits, withdrawals, estimated interest, and ending balances.</p>
+
       <div class="table-wrap">
         <table>
           <thead>
@@ -659,12 +680,12 @@
 
       const quickStats = document.getElementById('quickStats');
       quickStats.innerHTML = `
-        <div class="mini-stat"><span>Savings Accounts</span><strong>${accounts.length}</strong></div>
-        <div class="mini-stat"><span>MP2 / Coop Records</span><strong>${dividendItems.length}</strong></div>
-        <div class="mini-stat"><span>Other Investments</span><strong>${investments.length}</strong></div>
-        <div class="mini-stat"><span>Total Savings Value</span><strong>${peso(totalSavings)}</strong></div>
-        <div class="mini-stat"><span>Total Investment Value</span><strong>${peso(totalInvestments)}</strong></div>
-        <div class="mini-stat"><span>Total MP2 / Coop Value</span><strong>${peso(totalDividends)}</strong></div>
+        <div class="quick-item"><span>Savings Accounts</span><strong>${accounts.length}</strong></div>
+        <div class="quick-item"><span>MP2 / Coop Records</span><strong>${dividendItems.length}</strong></div>
+        <div class="quick-item"><span>Other Investments</span><strong>${investments.length}</strong></div>
+        <div class="quick-item"><span>Total Savings Value</span><strong>${peso(totalSavings)}</strong></div>
+        <div class="quick-item"><span>Total MP2 / Coop Value</span><strong>${peso(totalDividends)}</strong></div>
+        <div class="quick-item"><span>Total Investment Value</span><strong>${peso(totalInvestments)}</strong></div>
       `;
     }
 
